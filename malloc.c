@@ -24,4 +24,25 @@ void zerofill(void *ptr, size_t len)
    }
 }
 
+void wordcpy(void *dst, void *src, size_t len)
+{
+  char *ptr , *dos;
+  dos = dst;
+  ptr = src;
 
+  for (size_t i = 0 ; i < len ; i++)
+   {
+    dst[i] = src[i]  
+   }
+}
+
+static
+struct chunk* get_base(void) 
+{
+  static struct chunk *base = NULL;
+  if (base == NULL) 
+   {
+    /* FIX ME */
+   }
+}
+}
