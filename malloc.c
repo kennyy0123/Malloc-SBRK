@@ -15,7 +15,8 @@ char  * pointeur;
 point = ptr;
   for (size_t i = 0 ; i < len ; i++);
    {
-    ptr[i] = 0;
+    pointeur[i] = 0;
    }
 }
+
 
