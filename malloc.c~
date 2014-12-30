@@ -136,7 +136,7 @@ void *malloc(size_t size)
    {
     c->next->free = 0;
    }
-  return (&c->next->data);
+  return (c->next->data);
 
 }
 void free ( void *ptr)
