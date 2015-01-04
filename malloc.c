@@ -104,8 +104,12 @@ static
 struct chunk* get_chunk(void *p)
 {
 
-  if (p != NULL && word_align(sizeof (p)) == sizeof(p) && 
-        (p) >= (void *)get_base() && p <= sbrk(0))
+  if (p != NULL)
+   {
+   return NULL;
+   } 
+  
+   if(p>(void*)(get_base()) && p<(void*)(sbrk(0)))
    {
     struct chunk *base = p - sizeof(struct chunk);
     if (p == base->data)
