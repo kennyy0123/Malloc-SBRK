@@ -4,8 +4,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-
-
 struct chunk {
   struct chunk *next, *prev;
   size_t        size;
@@ -106,7 +104,7 @@ static
 struct chunk* get_chunk(void *p)
 {
 
-  if (p != NULL && word_align(sizeof (*p)) == sizeof(p) && 
+  if (p != NULL && word_align(sizeof (p)) == sizeof(p) && 
         (p) >= (void *)get_base() && p <= sbrk(0))
    {
     struct chunk *base = p - sizeof(struct chunk);
@@ -141,7 +139,6 @@ void *malloc(size_t size)
 }
 void free ( void *ptr)
 {
-
   struct chunk *test = get_chunk(ptr);
   if (test != NULL)
    {
@@ -153,8 +150,40 @@ void *calloc (size_t nmenb, size_t size)
 {
   size_t *new;
   new = malloc (nmenb * size);
-  zerofill(new, nmenb *size);
-
+  zerofill(new, nmenb*size);
   return new;
-
 }
+
+void* realloc(void *old, size_t newsize)
+{
+  if (newsize == 0)
+   {
+    free(old);
+    return NULL;
+   }
+
+  void *tmp = malloc(newsize);
+  if (old == NULL)
+   {
+    return tmp;
+   }
+  else
+   {
+    struct chunk  *new = get_chunk(old);
+
+    if (!tmp || !new)
+     return NULL;
+    else
+     {
+      wordcpy(tmp,new->data,new->size);
+      free(old);
+      return tmp;
+     }
+   }
+}
+
+
+
+
+
+
